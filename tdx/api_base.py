@@ -4,6 +4,11 @@ from tdx import industry_hy
 
 """601118.XSHG', '002772.XSHE"""
 
+from tdx.tdx_data_process import tdx2csv_data_path
+import tdx
+import pandas as pd
+import datetime
+
 
 def industrys():
     """
@@ -15,6 +20,8 @@ def industrys():
 
 
 # print(industrys())
+
+
 def industry(industry_code):
     """
     获得属于某一行业的所有股票列表。
@@ -32,7 +39,19 @@ def get_trading_dates():
     date='2016-05-02'
     :return:list[`datetime.date`]
     """
-    pass
+    import os
+    szzs_path_999999 = tdx2csv_data_path + 'tdx\\k_line\\K_day\\SH#999999.csv'
+    szzs_path_000001 = tdx2csv_data_path + 'tdx\\k_line\\K_day\\SH#000001.csv'
+    if os.path.exists(szzs_path_999999):
+        df = pd.read_csv(szzs_path_999999)
+        return pd.to_datetime(df['date'].tolist())
+    if os.path.exists(szzs_path_000001):
+        df = pd.read_csv(szzs_path_000001)
+        return pd.to_datetime(df['date'].tolist())
+    print('no szzs 999999 or 000001')
+
+
+# print(get_trading_dates())
 
 
 def get_previous_trading_date():
@@ -56,13 +75,27 @@ def get_fundamentals():
     pass
 
 
-def get_price():
+def get_price(order_book_id):  # , start, end
     """
     获取指定合约或合约列表的历史行情（包含起止日期，日线或分钟线），不能在’handle_bar’函数中进行调用。
+    这一函数主要是为满足在研究平台编写策略习惯而引入。
     ('000001.XSHE', start_date='2015-04-01', end_date='2015-04-12')
     :return:
     """
-    pass
+    order_book_id_0, order_book_id_1 = order_book_id.split('.')
+    if order_book_id_1 == 'XSHG':
+        file_name = 'SH#' + order_book_id_0 + '.csv'
+    if order_book_id_1 == 'XSHE':
+        file_name = 'SZ#' + order_book_id_0 + '.csv'
+
+    path = tdx2csv_data_path + 'tdx\\k_line\\K_day\\' + file_name
+    df = pd.read_csv(path)
+    df['date'] = pd.to_datetime(df['date'])
+    df.set_index("date", inplace=True)
+    return df
+
+
+# print(get_price('880301.XSHG').head())
 
 
 def get_securities_margin():
