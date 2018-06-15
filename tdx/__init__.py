@@ -12,3 +12,6 @@ import tdx.tdx_data_config_parser
 
 all__ = ['tdx_data_process']
 tdx.tdx_data_config_parser.config_read()
+tdx.tdx_data_process.get_status()
+# tdx.tdx_data_process.init_import_k_data()  # todo, if run ,cancle the annotation
+
