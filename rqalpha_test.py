@@ -2,6 +2,26 @@ __author__ = 'wanderknight'
 __time__ = '2018/6/9 20:16'
 
 from rqalpha.api import *
+config = {
+"base": {
+"data_bundle_path": "E:\fintech_data\rqalpha_data\bundle",
+"start_date": "2016-06-01",
+"end_date": "2016-12-01",
+"benchmark": "000300.XSHG",
+"accounts": {
+"stock": 100000
+}
+},
+"extra": {
+"log_level": "verbose",
+},
+"mod": {
+"sys_analyser": {
+"enabled": True,
+"plot": True
+}
+}
+}
 
 
 # 在这个方法中编写任何的初始化逻辑。context对象将会在你的算法策略的任何方法之间做传递。
@@ -31,3 +51,5 @@ def handle_bar(context, bar_dict):
         # order_percent并且传入1代表买入该股票并且使其占有投资组合的100%
         order_percent(context.s1, 1)
         context.fired = True
+
+run_func(init=init, handle_bar=handle_bar, config=config)
