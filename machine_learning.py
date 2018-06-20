@@ -14,13 +14,13 @@ def read_and_show():
     df_szzs = api_base.get_price('000001.XSHG')
     df_szzs = df_szzs[df_szzs.index > pd.to_datetime('2000-01-01')]
     print(df_szzs.head())
-    df_szzs['close'].plot()
-    plt.title("szzs read and show", fontsize=20)
-    plt.show()
+    # df_szzs['close'].plot()
+    # plt.title("szzs read and show", fontsize=20)
+    # plt.show()
     return df_szzs
 
 
-df = read_and_show()
+# df = read_and_show()
 
 
 def get_stats(s, Division_str, n=252):
@@ -73,7 +73,7 @@ def first_analy(df_szzs):
     get_stats(on_rtn, 'on_rtn')
 
 
-first_analy(df)
+# first_analy(df)
 
 
 def create_vecter(df_szzs):
@@ -84,7 +84,7 @@ def create_vecter(df_szzs):
     return df_szzs20
 
 
-df20 = create_vecter(df)
+# df20 = create_vecter(df)
 
 
 def get_signal(r):
@@ -161,7 +161,7 @@ def support_vecter(df_szzs20, df_szzs):
     get_stats(tf2['PnL'], 'get_signal_revers tf2 PnL')
 
 
-support_vecter(df20, df)
+# support_vecter(df20, df)
 
 
 def use_dtw(sp):
@@ -207,4 +207,4 @@ def use_dtw(sp):
     get_stats(pd.Series(return_list), 'dtw')
 
 
-use_dtw(df['close'])
+# use_dtw(df['close'])
